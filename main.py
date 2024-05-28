@@ -26,6 +26,21 @@ def Main():
     e1.bind('<Key>', lambda x:textoEntrada.set(e1.get()+x.char))
     e1.pack()
 
+    label = tkinter.Label(root, text="Cpf")
+    label.pack()
+
+    textoEntrada = tkinter.StringVar()
+    e2 = tkinter.Entry(root)
+    e2.bind('<Key>', lambda x:textoEntrada.set(e1.get()+x.char))
+    e2.pack()
+
+    label = tkinter.Label(root, text="Estado")
+    label.pack()
+
+    textoEntrada = tkinter.StringVar()
+    e3 = tkinter.Entry(root)
+    e3.bind('<Key>', lambda x:textoEntrada.set(e1.get()+x.char))
+    e3.pack()
 
     root.mainloop()
 
