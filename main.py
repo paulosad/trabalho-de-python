@@ -2,6 +2,8 @@ import tkinter
 from tkinter import messagebox as mb
 from tkinter import ttk
 import sqlite3
+from PIL import Image, ImageTk
+
 #começar com tela com um botão e um entry (nome)- v1
 #adicionar mais duas entrys (cpf e estado) e suas labels - v2
 #mudar o fundo para uma imagem mais bonita, adicionar readme.txt explicando como usar - v3
@@ -17,6 +19,17 @@ def Main():
     root = tkinter.Tk()
     root.title("Trabalho RAD")
     root.resizable(False, False)
+
+     # Abrir a imagem usando Pillow
+    imagem = Image.open("imagem.jpg")
+
+    # Converter a imagem para um formato que o Tkinter possa usar
+    imagem_tk = ImageTk.PhotoImage(imagem)
+
+    # Adicionar a imagem de fundo
+    canvas = tkinter.Canvas(root, width=imagem.width, height=imagem.height)
+    canvas.pack(fill="both", expand=True)
+    canvas.create_image(0, 0, image=imagem_tk, anchor="nw")
     
     label = tkinter.Label(root, text="Nome")
     label.pack()
