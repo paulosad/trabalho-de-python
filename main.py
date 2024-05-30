@@ -15,15 +15,31 @@ from PIL import Image, ImageTk
 #Merge de x com v - v6
 #Adicionar verificação de CPF e de estado, com base na função cpf e na lista de estados .txt antes de adicionar no sqlite v7
 
+def salvar_dados(nome, cpf, estado):
+    # Conectar ao banco de dados SQLite (ou criar se não existir)
+    conn = sqlite3.connect('dados.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''CREATE TABLE IF NOT EXISTS clientes
+                          (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          nome TEXT NOT NULL,
+                          cpf TEXT NOT NULL,
+                          estado TEXT NOT NULL)''')
+
+    cursor.execute("INSERT INTO clientes (nome, cpf, estado) VALUES (?, ?, ?)", (nome, cpf, estado))
+    conn.commit()
+
+    conn.close()
+
 def Main():
     root = tkinter.Tk()
     root.title("Trabalho RAD")
     root.resizable(False, False)
 
-     # Abrir a imagem usando Pillow
+    # Abrir a imagem usando Pil
     imagem = Image.open("imagem.jpg")
 
-    # Converter a imagem para um formato que o Tkinter possa usar
+    # Converter a imagem o Tkinter
     imagem_tk = ImageTk.PhotoImage(imagem)
 
     # Adicionar a imagem de fundo
@@ -31,31 +47,31 @@ def Main():
     canvas.pack(fill="both", expand=True)
     canvas.create_image(0, 0, image=imagem_tk, anchor="nw")
     
-    label = tkinter.Label(root, text="Nome")
-    label.pack()
+    label = tkinter.Label(canvas, text="Nome")
+    label.place(x=50, y=50) 
 
-    textoEntrada = tkinter.StringVar()
-    e1 = tkinter.Entry(root)
-    e1.bind('<Key>', lambda x:textoEntrada.set(e1.get()+x.char))
-    e1.pack()
+    textoEntradaNome = tkinter.StringVar()
+    e1 = tkinter.Entry(canvas, textvariable=textoEntradaNome)
+    e1.place(x=150, y=50) 
 
-    label = tkinter.Label(root, text="Cpf")
-    label.pack()
+    label = tkinter.Label(canvas, text="Cpf")
+    label.place(x=50, y=80)  
 
-    textoEntrada = tkinter.StringVar()
-    e2 = tkinter.Entry(root)
-    e2.bind('<Key>', lambda x:textoEntrada.set(e1.get()+x.char))
-    e2.pack()
+    textoEntradaCpf = tkinter.StringVar()
+    e2 = tkinter.Entry(canvas, textvariable=textoEntradaCpf)
+    e2.place(x=150, y=80)  
 
-    label = tkinter.Label(root, text="Estado")
-    label.pack()
+    label = tkinter.Label(canvas, text="Estado")
+    label.place(x=50, y=110)  
 
-    textoEntrada = tkinter.StringVar()
-    e3 = tkinter.Entry(root)
-    e3.bind('<Key>', lambda x:textoEntrada.set(e1.get()+x.char))
-    e3.pack()
+    textoEntradaEstado = tkinter.StringVar()
+    e3 = tkinter.Entry(canvas, textvariable=textoEntradaEstado)
+    e3.place(x=150, y=110) 
+
+    # Botão para salvar
+    botao_salvar = tkinter.Button(canvas, text="Salvar", command=lambda: salvar_dados(textoEntradaNome.get(), textoEntradaCpf.get(), textoEntradaEstado.get()))
+    botao_salvar.place(x=50, y=150) 
 
     root.mainloop()
 
 Main()
-
