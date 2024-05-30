@@ -1,0 +1,10 @@
+Rio de Janeiro;
+Sao Paulo;
+Espirito Santo;
+Minas Gerais;
+Amapa;
+Roraima;
+Rondonia;
+Acre;
+Parana;
+Santa Catarina;
